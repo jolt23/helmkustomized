@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-what-the-helm
+spec:
+  template:
+    spec:
+      containers:
+        - name: what-the-helm
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: debug
+              containerPort: 8080
+              protocol: TCP
