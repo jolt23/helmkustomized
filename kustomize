@@ -1,9 +1,9 @@
 #!/bin/bash
 
 BASE_PATH=./base
-
 HELM_ADDITIONAL_OPT=""
 
+# Identify if values.yaml exists within an overlay
 OVERLAY_VALUE_FILE="$2/values.yaml"
 if [ -f "$OVERLAY_VALUE_FILE" ]; then
     HELM_ADDITIONAL_OPT="$HELM_ADDITIONAL_OPT -f $2/values.yaml"
@@ -13,15 +13,12 @@ fi
 helm template ./what-the-helm --name-template foo --namespace default -f $BASE_PATH/values.yaml $HELM_ADDITIONAL_OPT > $BASE_PATH/all.yaml
 
 case $1 in
-
   apply)
     kustomize build $2 | kubectl apply -f -
     ;;
-
   delete)
     kustomize build $2 | kubectl delete -f -
     ;;
-
   *)
     echo -n "unknown command, only supported commands are apply, delete"
     exit 1
